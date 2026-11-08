@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Models\User;
@@ -26,34 +25,45 @@ class AuthController extends Controller
 
         return response()->json([
             'message' => 'Registration successful',
-            'user' => $user,
+            'user' => [
+                'id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email,
+            ],
             'token' => $token,
         ], 201);
     }
 
-    public function login(Request $request)
-    {
-        $credentials = $request->validate([
-            'email' => 'required|email',
-            'password' => 'required|string',
-        ]);
 
-        $user = User::where('email', $credentials['email'])->first();
+            public function login(Request $request)
+            {
+                $credentials = $request->validate([
+                'email' => 'required|email',
+                'password' => 'required|string',
+            ]);
 
-        if (!$user || !Hash::check($credentials['password'], $user->password)) {
-            return response()->json([
-                'message' => 'Invalid credentials'
+                $user = User::where('email', $credentials['email'])->first();
+
+                    if (!$user || !Hash::check($credentials['password'], $user->password)) {
+                    return response()->json([
+                'message' => 'Invalid email or password.'
             ], 401);
         }
 
-        $token = $user->createToken('auth_token')->plainTextToken;
+    $token = $user->createToken('auth_token')->plainTextToken;
 
-        return response()->json([
-            'message' => 'Login successful',
-            'user' => $user,
-            'token' => $token,
-        ]);
-    }
+    return response()->json([
+        'message' => 'Login successful',
+        'user' => [
+            'id' => $user->id,
+            'name' => $user->name,
+            'email' => $user->email,
+            'role' => $user->role,
+        ],
+        'token' => $token,
+    ], 200);
+}
+
 
     public function logout(Request $request)
     {

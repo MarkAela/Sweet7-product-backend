@@ -9,7 +9,8 @@ use Illuminate\Http\Request;
 class ProductController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of products.
+     * Admin and User can view products.
      */
     public function index()
     {
@@ -17,11 +18,11 @@ class ProductController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created product.
+     * Only Admin can create products.
      */
     public function store(Request $request)
     {
-        // Only admins can create products
         if ($request->user()->role !== 'admin') {
             return response()->json([
                 'message' => 'Forbidden. Admin access required.'
@@ -42,7 +43,8 @@ class ProductController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display a specific product.
+     * Admin and User can view product details.
      */
     public function show(string $id)
     {
@@ -52,11 +54,11 @@ class ProductController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update a product.
+     * Only Admin can update products.
      */
     public function update(Request $request, string $id)
     {
-        // Only admins can update products
         if ($request->user()->role !== 'admin') {
             return response()->json([
                 'message' => 'Forbidden. Admin access required.'
@@ -79,11 +81,11 @@ class ProductController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Delete a product.
+     * Only Admin can delete products.
      */
     public function destroy(string $id)
     {
-        // Only admins can delete products
         if (request()->user()->role !== 'admin') {
             return response()->json([
                 'message' => 'Forbidden. Admin access required.'

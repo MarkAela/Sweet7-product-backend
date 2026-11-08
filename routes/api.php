@@ -12,25 +12,25 @@ use App\Http\Controllers\AddressController;
 use App\Http\Controllers\SellerController;
 use App\Http\Controllers\OrderController;
 
-// API Test
 // ==========================================
 // PUBLIC ROUTES
 // ==========================================
 
+// API Test
 Route::get('/test', function () {
     return response()->json([
         'message' => 'API is working!'
     ]);
 });
 
+// Authentication
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
-Route::get('/products', [ProductController::class, 'index']);
-Route::get('/products/{product}', [ProductController::class, 'show']);
-
+// Categories
 Route::get('/categories', [CategoryController::class, 'index']);
 Route::get('/categories/{category}', [CategoryController::class, 'show']);
+
 
 // ==========================================
 // PRIVATE ROUTES
@@ -42,7 +42,15 @@ Route::middleware('auth:sanctum')->group(function () {
     // Logout
     Route::post('/logout', [AuthController::class, 'logout']);
 
-    // Product management
+    // ======================================
+    // PRODUCT ROUTES
+    // ======================================
+
+    // Admin and User can view products
+    Route::get('/products', [ProductController::class, 'index']);
+    Route::get('/products/{product}', [ProductController::class, 'show']);
+
+    // Only Admin can create, update, and delete
     Route::post('/products', [ProductController::class, 'store']);
     Route::put('/products/{product}', [ProductController::class, 'update']);
     Route::patch('/products/{product}', [ProductController::class, 'update']);
