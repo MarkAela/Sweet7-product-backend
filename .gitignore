@@ -1,8 +1,16 @@
+# Logs
 *.log
+
+# OS files
 .DS_Store
+Thumbs.db
+
+# Environment files
 .env
 .env.backup
 .env.production
+
+# IDE and editor files
 .phpactor.json
 .phpunit.result.cache
 /.fleet
@@ -11,17 +19,24 @@
 /.phpunit.cache
 /.vscode
 /.zed
+
+# Laravel authentication
 /auth.json
+
+# Dependencies
 /node_modules
+/vendor
+
+# Laravel generated files
 /public/build
 /public/hot
 /public/storage
 /storage/*.key
 /storage/pail
-/vendor
+
+# Laravel local environment files
 Homestead.json
 Homestead.yaml
-Thumbs.db
 
 # Separate React frontend repository
 /frontend/
